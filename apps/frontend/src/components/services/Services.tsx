@@ -23,10 +23,15 @@ export default function Services() {
         <div className="row text-center g-4">
           {services.map(({ icon: Icon, title, desc, href }) => (
             <div key={title} className="col-md-3">
-              <div className="display-4 text-primary"><Icon /></div>
-              <h5 className="mt-3">{title}</h5>
-              <p className="text-muted">{desc}</p>
-              <Link href={href} className="stretched-link" />
+              <Link href={href} className="text-decoration-none text-reset">
+                <div className="card h-100 p-4 position-relative">
+                  <div className="display-4 text-primary">
+                    <Icon />
+                  </div>
+                  <h5 className="mt-3">{title}</h5>
+                  <p className="text-muted">{desc}</p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>
