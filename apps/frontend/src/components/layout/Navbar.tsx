@@ -26,7 +26,7 @@ export default function Navbar() {
           {/* Logo in place of text */}
           <Link href="/" className="navbar-brand p-0">
             <img
-              src="/images/tech-events-nepal-logo.svg"
+              src="/images/Ten_img.png"
               alt="Tech Events Nepal"
               className="nav-logo"
             />

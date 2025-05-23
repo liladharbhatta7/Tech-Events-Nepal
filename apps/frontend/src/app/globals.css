@@ -1,25 +1,43 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* globals.css */
 
+:root {
+  /* Base page colors */
+  --background:        #ffffff;
+  --foreground:        #171717;
+
+  /* Brand palette */
+  --purple-deep:       #1A0033;
+  --purple-tint:       #3C1F58;
+  --yellow-electric:   #FFEB00;
+
+  /* Section / card backgrounds */
+  --bg-section:        rgba(26, 0, 51, 0.10);  /* 10% purple—visible on white */
+  --bg-card:           rgba(245, 245, 245, 0.9);/* soft off-white */
+  --border-card:       rgba(26, 0, 51, 0.1);    /* light purple border */
+
+  /* Text colors */
+  --text-dark:         #0F001A;
+  --muted-gray:        #7D7D7D;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* Dark-mode page colors */
+    --background:      #0a0a0a;
+    --foreground:      #ededed;
+
+    /* You can optionally shift your palette slightly for dark mode */
+    --bg-section:      rgba(58, 31, 88, 0.10);
+    --bg-card:         rgba(58, 31, 88, 0.15);
+    --border-card:     rgba(58, 31, 88, 0.2);
   }
 }
 
-html,
-body {
+html, body {
   max-width: 100vw;
   overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
   background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -27,8 +45,8 @@ body {
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 a {

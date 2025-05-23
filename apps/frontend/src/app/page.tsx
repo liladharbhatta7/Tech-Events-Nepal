@@ -34,7 +34,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <Hero />
-                <FeaturedEvents events={mockEvents} />
+        <FeaturedEvents events={mockEvents} />
 
         <Services />
         <WhyUs />
