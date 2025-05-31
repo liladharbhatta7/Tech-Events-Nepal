@@ -1,29 +1,54 @@
+// src/components/layout/Navbar.tsx
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-// Make sure you import Bootstrap CSS once in your root layout/_app:
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   // Dynamically import Bootstrap JS on the client
   useEffect(() => {
     import('bootstrap/dist/js/bootstrap.bundle.min.js');
   }, []);
 
+  // Check localStorage for a token when the component mounts
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      setIsAuthenticated(!!token);
+    }
+  }, []);
+
+  // Re-check token whenever the route changes (e.g. after login/logout)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      setIsAuthenticated(!!token);
+    }
+  }, [pathname]);
+
   const toggleNav = () => setIsNavCollapsed(prev => !prev);
   const isActive = (path: string) => (pathname === path ? 'active' : '');
+
+  // When the user clicks “Log Out”
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
+      router.push('/');
+    }
+  };
 
   return (
     <>
       <nav className="navbar navbar-expand-lg shadow-sm">
         <div className="container">
-          {/* Logo in place of text */}
+          {/* Logo */}
           <Link href="/" className="navbar-brand p-0">
             <img
               src="/images/Ten_img.png"
@@ -132,18 +157,37 @@ export default function Navbar() {
             </ul>
 
             <div className="d-flex">
-              <Link href="/login" className="btn btn-outline-primary me-2">
-                Login
-              </Link>
-              <Link href="/signup" className="btn btn-primary">
-                Sign Up
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    href="/dashboard"
+                    className="btn btn-outline-light me-2"
+                  >
+                    Dashboard
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-outline-danger"
+                  >
+                    Log Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="btn btn-outline-primary me-2">
+                    Login
+                  </Link>
+                  <Link href="/signup" className="btn btn-primary">
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Global styles for brand colors & layout */}
+      {/* Global CSS overrides (brand colors, styling) */}
       <style jsx global>{`
         :root {
           --purple-deep:     #1A0033;
@@ -156,7 +200,7 @@ export default function Navbar() {
         /* Navbar container */
         .navbar {
           background-color: var(--purple-deep) !important;
-          padding: 0.5rem 1rem;    /* 8px top/bottom, 16px sides */
+          padding: 0.5rem 1rem;
           min-height: 56px;
           border-bottom: 1px solid var(--border-light);
         }
@@ -198,7 +242,7 @@ export default function Navbar() {
           border-radius: 2px;
         }
 
-        /* Dropdown styling */
+        /* Dropdown menu */
         .dropdown-menu {
           background-color: var(--purple-deep) !important;
           border: none;
@@ -231,6 +275,24 @@ export default function Navbar() {
         .btn-primary:hover {
           background-color: #E6D700 !important; /* ~10% darker */
           border-color: #E6D700 !important;
+        }
+
+        /* Dashboard & Logout button styles */
+        .btn-outline-light {
+          border-color: var(--white-soft) !important;
+          color: var(--white-soft) !important;
+        }
+        .btn-outline-light:hover {
+          background-color: var(--white-soft) !important;
+          color: var(--purple-deep) !important;
+        }
+        .btn-outline-danger {
+          border-color: #dc3545 !important;
+          color: #dc3545 !important;
+        }
+        .btn-outline-danger:hover {
+          background-color: #dc3545 !important;
+          color: #fff !important;
         }
       `}</style>
     </>

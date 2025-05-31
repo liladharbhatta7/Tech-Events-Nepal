@@ -1,0 +1,22 @@
+frontend/
+└─ src/
+   └─ app/
+      ├─ layout.tsx        ← Contains <Navbar /> once inside AuthProvider
+      ├─ page.tsx          ← No longer imports Navbar; just Hero, FeaturedEvents, etc.
+      └─ context/
+         └─ AuthContext.tsx
+
+   └─ components/
+      └─ layout/
+         ├─ Navbar.tsx     ← Updated code above (conditional Login / Dashboard)
+         └─ Footer.tsx
+      └─ hero/
+         └─ Hero.tsx
+      └─ events/
+         └─ FeaturedEvents.tsx
+      └─ services/
+         └─ Services.tsx
+      └─ whyus/
+         └─ WhyUs.tsx
+      └─ help/
+         └─ HelpSection.tsx

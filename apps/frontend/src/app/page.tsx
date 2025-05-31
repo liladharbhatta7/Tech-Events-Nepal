@@ -1,9 +1,8 @@
+// src/app/page.tsx
 'use client';
 import React from 'react';
 
-import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-
 import Hero from '@/components/hero/Hero';
 import Help from '@/components/help/HelpSection';
 import Services from '@/components/services/Services';
@@ -31,7 +30,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Navbar />
       <main>
         <Hero />
         <FeaturedEvents events={mockEvents} />
