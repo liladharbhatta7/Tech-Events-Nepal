@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS Loading Animations</title>
+    <style>
+        /* Global Styles for Demo Layout */
+        body {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+        .loader-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+        .note {
+            font-size: 0.85rem;
+            color: #64748b;
+            text-align: center;
+            margin-top: 1rem;
+            max-width: 260px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Spinning Ring Loader -->
+    <div class="loader-container">
+        <h3>Spinning Ring Loader</h3>
+        <div class="spinning-ring">
+            <div class="ring"></div>
+        </div>
+        <p class="note">Ideal for minimalist interfaces where subtle motion indicates background activity</p>
+        <style>
+            .spinning-ring {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                height: 100px;
+            }
+            .spinning-ring .ring {
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(30, 41, 59, 0.1);
+                border-top: 3px solid #3b82f6;
+                border-radius: 50%;
+                animation: spin-ring 1.2s linear infinite;
+            }
+            @keyframes spin-ring {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </div>
+
+    <!-- Bouncing Dots Loader -->
+    <div class="loader-container">
+        <h3>Bouncing Dots Loader</h3>
+        <div class="bouncing-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <p class="note">Perfect for playful interfaces needing sequential motion feedback</p>
+        <style>
+            .bouncing-dots {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                height: 60px;
+            }
+            .bouncing-dots .dot {
+                width: 14px;
+                height: 14px;
+                background: #8b5cf6;
+                border-radius: 50%;
+                animation: bounce 0.6s infinite alternate;
+            }
+            .bouncing-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+            .bouncing-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+            @keyframes bounce {
+                to { transform: translateY(-12px); }
+            }
+        </style>
+    </div>
+
+    <!-- Pulsating Circle Loader -->
+    <div class="loader-container">
+        <h3>Pulsating Circle Loader</h3>
+        <div class="pulsating-circle">
+            <div class="pulse"></div>
+        </div>
+        <p class="note">Great for subtle indicators where gentle size transitions convey activity</p>
+        <style>
+            .pulsating-circle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                height: 100px;
+            }
+            .pulsating-circle .pulse {
+                width: 40px;
+                height: 40px;
+                background: #10b981;
+                border-radius: 50%;
+                animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            @keyframes pulse {
+                0%, 100% { transform: scale(0.85); opacity: 0.7; }
+                50% { transform: scale(1.15); opacity: 1; }
+            }
+        </style>
+    </div>
+
+    <!-- Progress Bar Loader -->
+    <div class="loader-container">
+        <h3>Progress Bar Loader</h3>
+        <div class="progress-bar">
+            <div class="bar"></div>
+        </div>
+        <p class="note">Best for conveying loading progress in dashboards or file uploads</p>
+        <style>
+            .progress-bar {
+                width: 200px;
+                height: 6px;
+                background: #e2e8f0;
+                border-radius: 3px;
+                overflow: hidden;
+            }
+            .progress-bar .bar {
+                height: 100%;
+                width: 30%;
+                background: #f59e0b;
+                border-radius: 3px;
+                animation: progress 1.8s ease-in-out infinite;
+            }
+            @keyframes progress {
+                0% { width: 0%; transform: translateX(0); }
+                50% { width: 100%; transform: translateX(0); }
+                100% { width: 100%; transform: translateX(200%); }
+            }
+        </style>
+    </div>
+
+    <!-- Skeleton Card Loader -->
+    <div class="loader-container">
+        <h3>Skeleton Card Loader</h3>
+        <div class="skeleton-card">
+            <div class="image"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <p class="note">Excellent for content placeholders in cards or lists while data loads</p>
+        <style>
+            .skeleton-card {
+                width: 220px;
+                background: white;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                position: relative;
+            }
+            .skeleton-card .image {
+                height: 120px;
+                background: #f1f5f9;
+            }
+            .skeleton-card .line {
+                height: 12px;
+                background: #f1f5f9;
+                margin: 16px;
+                border-radius: 4px;
+            }
+            .skeleton-card .line:last-child {
+                width: 70%;
+            }
+            .skeleton-card::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+                animation: shimmer 1.5s infinite;
+            }
+            @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+        </style>
+    </div>
+</body>
+</html>

@@ -4,44 +4,56 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function Navbar() {
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [hasStrapiToken, setHasStrapiToken] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { data: session, status } = useSession();
+  // status: "loading" | "authenticated" | "unauthenticated"
 
   // Dynamically import Bootstrap JS on the client
   useEffect(() => {
     import('bootstrap/dist/js/bootstrap.bundle.min.js');
   }, []);
 
-  // Check localStorage for a token when the component mounts
+  // Check localStorage for a Strapi token on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
-      setIsAuthenticated(!!token);
+      setHasStrapiToken(!!token);
     }
   }, []);
 
-  // Re-check token whenever the route changes (e.g. after login/logout)
+  // Re-check Strapi token whenever the route changes
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('token');
-      setIsAuthenticated(!!token);
+      setHasStrapiToken(!!token);
     }
   }, [pathname]);
+
+  const isAuthenticated = status === 'authenticated' || hasStrapiToken;
 
   const toggleNav = () => setIsNavCollapsed(prev => !prev);
   const isActive = (path: string) => (pathname === path ? 'active' : '');
 
-  // When the user clicks “Log Out”
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // If NextAuth session exists, sign out from NextAuth
+    if (status === 'authenticated') {
+      await signOut({ callbackUrl: '/' });
+      return;
+    }
+
+    // Otherwise, remove any Strapi token
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
-      setIsAuthenticated(false);
-      router.push('/');
+      setHasStrapiToken(false);
     }
+    // Redirect to home
+    router.replace('/');
   };
 
   return (
@@ -159,10 +171,7 @@ export default function Navbar() {
             <div className="d-flex">
               {isAuthenticated ? (
                 <>
-                  <Link
-                    href="/dashboard"
-                    className="btn btn-outline-light me-2"
-                  >
+                  <Link href="/dashboard" className="btn btn-outline-light me-2">
                     Dashboard
                   </Link>
                   <button
