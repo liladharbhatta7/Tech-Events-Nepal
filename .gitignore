@@ -1,0 +1,13 @@
+# Node modules
+node_modules/
+
+# Local environment variables
+.env
+.env.local
+
+# Build output
+dist/
+build/
+
+# Credentials
+credentials.json
